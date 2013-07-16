@@ -4,7 +4,7 @@ Sound Visualizer is an ActionScript 3.0 application I made during my experiments
 
 The computeSpectrum() method let's you get a snapshot of the current sound wave and store it in a ByteArray. This way you get a vector of 512 numbers representing the sound wave. Keep in mind that the first 256 values are the left channel and the other 256 values the right channel. The values range from -1 to 1 representing the amplitude. I've used a single BitmapData to draw out the sound wave. I've also added a simple GUI to change the music, the color of the bars and the amount of bars that appear.
 
-
+***
 <pre>
   ___  _  _  _        ___  ____ _   _ 
  | __|(_)| |(_) _ __ / __||_  /| | | |
