@@ -1,4 +1,4 @@
-Sound Visualizer
+SZU Sound Visualizer
 ===
 Sound Visualizer is an ActionScript 3.0 application I made during my experiments with the computeSpectrum() method of the SoundMixer Class. It's a dynamic animation based on the music  that's playing in the background.I had a lot of fun with the computeSpectrum method I find it very inspiring to be able to make Music "appear" in a visual form. 
 
