@@ -1,98 +1,65 @@
 package pl.filipszu.soundVis.components{
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	
-	import fl.controls.Button;
-	import fl.controls.ColorPicker;
-	import fl.controls.NumericStepper;
-	import fl.events.ColorPickerEvent;
-	
-	import pl.filipszu.soundVis.events.GUIEvent;
+	import pl.filipszu.components.ColorPicker;
+	import pl.filipszu.soundVis.SoundVisualizer;
 	
 	public class GUI extends Sprite{
 		
-		private var bg:Sprite = new Sprite();
-		private var changeSongBtn:Button = new Button();
-		private var changeFlowBtn:Button = new Button();
-		private var colorPicker:ColorPicker = new ColorPicker();
-		private var stepper:NumericStepper = new NumericStepper();
+		private var pickersHolder:Sprite;
+		private var soundVis:SoundVisualizer;
 		
-		public function GUI(){
+		public function GUI(vis){
 			super();
+			soundVis = vis;
+			addEventListener(Event.ADDED_TO_STAGE, whenOnStage);
 			init();
 		}
 		
+		private function whenOnStage(e:Event):void{
+			removeEventListener(Event.ADDED_TO_STAGE, whenOnStage);
+			layout();
+		}
+		
+		public function layout():void{
+			pickersHolder.y = stage.stageHeight * 0.75;
+			pickersHolder.x = stage.stageWidth /2 - pickersHolder.width/2;
+		}
+		
 		private function init():void{
-			createBG();
-			createChangeMusicBtn();
-			createColorPicker();
-			createFlowBtn();
-			createColumnInput();
+			createColorPickers();
 		}
 		
-		private function createColorPicker():void{
-			colorPicker.x = changeSongBtn.x - 10 - colorPicker.width;
-			colorPicker.y = bg.y + (bg.height/2 - colorPicker.height/2);
-			colorPicker.addEventListener(ColorPickerEvent.CHANGE, onColorChange);
-			addChild(colorPicker);
-		}
-		
-		private function onColorChange(e:ColorPickerEvent):void{
-			var event:GUIEvent = new GUIEvent(GUIEvent.COLOR_CHANGE);
-			event.color = e.color;	
-			dispatchEvent(event);
-		}
-		
-		
-		private function createBG():void{
+		private function createColorPickers():void{
+			pickersHolder = new Sprite();	
+			var picker1:ColorPicker = new ColorPicker();
+			picker1.x = 0;
+			picker1.y = 0;
+			picker1.id = 0;
+			pickersHolder.addChild(picker1);
 			
-			bg.name = 'guiBG';
-			bg.graphics.beginFill(0xFFFFFF, 0.9);
-			bg.graphics.drawRect(0, 0, 400, 40);
-			addChild(bg);
-		}
-		
-		private function createChangeMusicBtn():void{
+			var picker2:ColorPicker = new ColorPicker();
+			picker2.x = picker1.x + picker1.width + 50;
+			picker2.y = 0;
+			picker2.id = 1;
+			pickersHolder.addChild(picker2);
 			
-			changeSongBtn.label = 'Change Song';
-			changeSongBtn.x = bg.width - 10 - changeSongBtn.width;
-			changeSongBtn.y = bg.y + (bg.height/2 - changeSongBtn.height/2);
-			changeSongBtn.addEventListener(MouseEvent.CLICK, onChangeSong);
-			addChild(changeSongBtn);
+			var picker3:ColorPicker = new ColorPicker();
+			picker3.x = picker2.x + picker2.width + 50;
+			picker3.y = 0;
+			pickersHolder.addChild(picker3);
+			picker3.id = 2;
+			addChild(pickersHolder);
+			
+			picker1.addEventListener(Event.CHANGE, onColor1Change);
+			picker2.addEventListener(Event.CHANGE, onColor1Change);
+			picker3.addEventListener(Event.CHANGE, onColor1Change);
 		}
 		
-		private function createFlowBtn():void{	
-			changeFlowBtn.label = 'Change Flow';
-			changeFlowBtn.x = colorPicker.x - 10 - changeFlowBtn.width;
-			changeFlowBtn.y = bg.y + (bg.height/2 - changeFlowBtn.height/2);
-			changeFlowBtn.addEventListener(MouseEvent.CLICK, onChangeFlow);
-			addChild(changeFlowBtn);
-		}
-		
-		private function createColumnInput():void{	
-			stepper.x = changeFlowBtn.x - 10 - stepper.width;
-			stepper.y = bg.y + (bg.height/2 - stepper.height/2);
-			stepper.maximum = 66;
-			stepper.minimum = 4;
-			stepper.stepSize = 2;
-			stepper.value = 66;
-			stepper.addEventListener(Event.CHANGE, onStepperChange);
-			addChild(stepper);
-		}
-		
-		protected function onStepperChange(e:Event):void{
-			var event:GUIEvent = new GUIEvent(GUIEvent.COLUMN_CHANGE);
-			event.columns = stepper.value;	
-			dispatchEvent(event);
-		}
-		
-		private function onChangeFlow(e:MouseEvent):void{
-			dispatchEvent(new GUIEvent(GUIEvent.FLOW_CHANGE));
-		}
-		
-		private function onChangeSong(e:MouseEvent):void{
-			dispatchEvent(new GUIEvent(GUIEvent.SONG_CHANGE));
+		private function onColor1Change(e:Event):void{
+			var picker:ColorPicker = e.target as ColorPicker;
+			soundVis.color[picker.id] = picker.selectedColor;
 		}
 		
 	}

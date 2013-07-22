@@ -27,6 +27,9 @@ package pl.filipszu.soundVis{
 		
 		private var _left:Boolean = false;
 		
+		public var color:Array = [0xFFFFFF, 0xFFFFFF, 0xFFFFFF];
+		private var colorIndex = 0;
+		private var colorCount = 0;
 		public function set left(value:Boolean):void {
 			_left = value;
 			if(_left){
@@ -46,16 +49,14 @@ package pl.filipszu.soundVis{
 		private var currentMouseOffY:Number = 0;
 		private var draw:Boolean = false;
 		private var screen:Sprite;
-		private var color:uint = 0xFFFFFF;
+		//private var color:uint = 0xFFFFFF;
+		public var regPoint:Point;
 		
-		public function SoundVisualizer(){
+		public function SoundVisualizer(point:Point){
 			super();
+			regPoint = point;
 			addEventListener(Event.ADDED_TO_STAGE, whenOnStage);
 			
-		}
-		
-		public function addTint(_color:uint):void{
-			color = _color;
 		}
 		
 		private function extractRed(c:uint):uint {
@@ -90,7 +91,7 @@ package pl.filipszu.soundVis{
 				for(i= 0; i < colmnsData.length; i++){
 					var targX:Number =	(i * stage.stageWidth/columns);
 					var targY:Number = -1*(colmnsData[i] * 400);
-					var originY:Number = stage.stageHeight - 5;
+					var originY:Number = this.regPoint.y;
 					
 					var alphaC:Number = 0.6;
 					if(i%2!=0){
@@ -98,23 +99,20 @@ package pl.filipszu.soundVis{
 					}
 					
 					vis.graphics.lineStyle(1,0x000000, 0.5);
-					vis.graphics.beginFill(color,alphaC);
+					vis.graphics.beginFill(color[colorIndex],alphaC);
 					
 					if(i >= columns / 2){
 						var j:uint = columns - i + columns/2 - 1;
 						
 						targX = (j - columns/2) * stage.stageWidth/columns + (columns/2 * stage.stageWidth/columns);
 						
-						vis.graphics.beginFill(color, alphaC);	
+						vis.graphics.beginFill(color[colorIndex], alphaC);	
 					}
 					
 					vis.graphics.drawRect(targX, originY, stage.stageWidth/columns, targY);
 					vis.graphics.endFill();
 				}
 			}
-			
-			//mouseOffX = -2 + ((stage.mouseX / (stage.stageWidth / 100)) * (4 / 100));
-			//mouseOffY = -1 + ((stage.mouseY / (stage.stageHeight / 100)) * (-2 / 100));
 			
 			if(currentMouseOffX > mouseOffX  ){
 				currentMouseOffX-= 0.2;
@@ -152,7 +150,10 @@ package pl.filipszu.soundVis{
 				//canvas.bitmapData.colorTransform(displayBD.rect, colorTransform);
 			}
 			
-			
+			colorIndex++;
+			if(colorIndex == color.length){
+				colorIndex = 0;
+			}
 			
 			canvas.bitmapData.draw(vis);
 		}
@@ -170,8 +171,8 @@ package pl.filipszu.soundVis{
 			screen.graphics.beginFill(0x000000, 0.04);
 			screen.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
 			createCanvas();
-			stage.addEventListener(MouseEvent.MOUSE_DOWN, onPress);
-			stage.addEventListener(MouseEvent.MOUSE_UP, onUp);
+			//stage.addEventListener(MouseEvent.MOUSE_DOWN, onPress);
+			//stage.addEventListener(MouseEvent.MOUSE_UP, onUp);
 			
 		}
 		

@@ -7,10 +7,14 @@
 
 package{
 	
+	import com.boostworthy.geom.ColorBar;
+	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.media.SoundMixer;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
@@ -32,7 +36,7 @@ package{
 		private var last:uint = getTimer();
 		private var ticks:uint = 0;
 		private var fpsLabel:TextField;
-		private var gui:GUI = new GUI();
+		private var gui:GUI;
 		
 		public function Main(){
 			super();
@@ -61,13 +65,7 @@ package{
 		}
 		
 		private function createGUI():void{
-			gui = new GUI();
-			gui.x = stage.stageWidth - gui.width - 3;
-			gui.y = 3;
-			gui.addEventListener(GUIEvent.SONG_CHANGE, onSongChange);
-			gui.addEventListener(GUIEvent.FLOW_CHANGE, onFlowChange);
-			gui.addEventListener(GUIEvent.COLOR_CHANGE, onColorChange);
-			gui.addEventListener(GUIEvent.COLUMN_CHANGE, onColumnChange);
+			gui = new GUI(visualizer);
 			addChild(gui);
 		}
 		
@@ -76,7 +74,7 @@ package{
 		}
 		
 		private function onColorChange(e:GUIEvent):void{
-			visualizer.addTint(e.color);
+			//visualizer.addTint(e.color);
 		}
 		
 		private function onSongChange(e:GUIEvent):void{
@@ -114,7 +112,7 @@ package{
 		}
 		
 		private function startVisualizer():void{
-			visualizer = new SoundVisualizer();
+			visualizer = new SoundVisualizer(new Point(0, stage.stageHeight * 0.7));
 			addChild(visualizer);
 			addChild(fpsLabel);
 			addEventListener(Event.ENTER_FRAME, onLoop);
