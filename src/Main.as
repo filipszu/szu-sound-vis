@@ -69,22 +69,6 @@ package{
 			addChild(gui);
 		}
 		
-		private function onColumnChange(e:GUIEvent):void{
-			visualizer.columns = e.columns;
-		}
-		
-		private function onColorChange(e:GUIEvent):void{
-			//visualizer.addTint(e.color);
-		}
-		
-		private function onSongChange(e:GUIEvent):void{
-			soundHandler.currentSong++;
-		}
-		
-		private function onFlowChange(e:GUIEvent):void{
-			visualizer.left = !visualizer.left;
-		}
-		
 		private function setStage():void{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;

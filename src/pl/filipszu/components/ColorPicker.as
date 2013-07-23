@@ -76,7 +76,6 @@ package pl.filipszu.components{
 			addChild(specRect);
 			
 			specRect.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			colorLabel.addEventListener(Event.CHANGE, onTextChange);
 			
 			marker = new Sprite();
 			marker.graphics.lineStyle(2, 0x000000);
@@ -108,23 +107,6 @@ package pl.filipszu.components{
 			
 		}
 		
-		private function onTextChange(e:Event):void{
-			//trace(e);
-			var hexS:String = colorLabel.text.substr(1);
-			var r:RegExp=new RegExp(/#/g);		
-			var color:uint = uint(String(colorLabel.text).replace(r,"0x"));
-			for (var j = 0; j < b.height; j++) {
-				for (var i = 0; i < b.width; i++) {
-					//trace('looking for: '+color);
-					//trace('analyzing: '+bd.getPixel(i,j));
-					if(bd.getPixel(i,j) == color){
-						marker.x = i;
-						marker.y = j;
-					}
-				}
-			}
-		}
-		
 		protected function onMouseDown(event:MouseEvent):void{
 			specRect.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			specRect.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -139,6 +121,7 @@ package pl.filipszu.components{
 			specRect.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			specRect.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
 			specRect.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			setSelectedColor();
 		}
 	
 		private function setSelectedColor():void{

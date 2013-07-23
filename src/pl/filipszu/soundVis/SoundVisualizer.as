@@ -25,23 +25,9 @@ package pl.filipszu.soundVis{
 		public var columns:uint = 66;
 		private var frameCount:uint = 0;
 		
-		private var _left:Boolean = false;
-		
 		public var color:Array = [0xFFFFFF, 0xFFFFFF, 0xFFFFFF];
 		private var colorIndex = 0;
 		private var colorCount = 0;
-		public function set left(value:Boolean):void {
-			_left = value;
-			if(_left){
-				mouseOffX = -3;
-			}else{
-				mouseOffX = 3;
-			}
-		}
-		
-		public function get left():Boolean {
-			return _left;
-		}
 		
 		private var mouseOffX:Number = 3;
 		private var mouseOffY:Number = -2;
@@ -49,7 +35,6 @@ package pl.filipszu.soundVis{
 		private var currentMouseOffY:Number = 0;
 		private var draw:Boolean = false;
 		private var screen:Sprite;
-		//private var color:uint = 0xFFFFFF;
 		public var regPoint:Point;
 		
 		public function SoundVisualizer(point:Point){
@@ -114,47 +99,29 @@ package pl.filipszu.soundVis{
 				}
 			}
 			
-			if(currentMouseOffX > mouseOffX  ){
-				currentMouseOffX-= 0.2;
-			}	
 			
-			if( currentMouseOffX < mouseOffX){
-				currentMouseOffX += 0.2;
-			}
 			
-			if(frameCount%2 == 0){
-				frameCount = 0;
+					//currentMouseOffY+= 0.2;
+				currentMouseOffX = 0.2;
+				currentMouseOffY = 0.2;
+				canvas.bitmapData.scroll(mouseOffX, mouseOffY);
 				
-				
-			
-					
-			
-				
-				if( currentMouseOffY < mouseOffY){
-					currentMouseOffY+= 0.2;
-				}
-				
-				if(currentMouseOffY > mouseOffY  ){
-					currentMouseOffY-= 0.2;
-				}
-				
-				canvas.bitmapData.scroll(currentMouseOffX, currentMouseOffY);
-				
-				if(!draw){
+				if(frameCount%3 == 0){	
 					canvas.bitmapData.draw(screen);
-					//canvas.bitmapData.applyFilter(canvas.bitmapData, canvas.bitmapData.rect, new Point(0, 0), new BlurFilter(1.5, 1.5));
 				}
 				
-				
-				
-				//canvas.bitmapData.colorTransform(displayBD.rect, colorTransform);
+	
+			//}
+			
+			if(frameCount%10 == 0){
+				colorIndex++;
+				if(colorIndex == color.length){
+					colorIndex = 0;
+				}
 			}
 			
-			colorIndex++;
-			if(colorIndex == color.length){
-				colorIndex = 0;
-			}
 			
+			frameCount++;
 			canvas.bitmapData.draw(vis);
 		}
 		
@@ -171,19 +138,7 @@ package pl.filipszu.soundVis{
 			screen.graphics.beginFill(0x000000, 0.04);
 			screen.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
 			createCanvas();
-			//stage.addEventListener(MouseEvent.MOUSE_DOWN, onPress);
-			//stage.addEventListener(MouseEvent.MOUSE_UP, onUp);
 			
-		}
-		
-		protected function onPress(event:MouseEvent):void{
-			// TODO Auto-generated method stub
-			draw = true;
-		}
-		
-		protected function onUp(event:MouseEvent):void{
-			// TODO Auto-generated method stub
-			draw = false;
 		}
 		
 	}
