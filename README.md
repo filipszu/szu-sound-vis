@@ -1,6 +1,6 @@
 Sound Visualizer
 ===
-ActionScript 3.0 app visualizing mp3's.
+mp3 equalizer build with ActionScript 3.0 SoundMixer.computeSpectrum().
 ***
 [Live Demo](http://demo.filipszu.pl/Sound_Visualizer/)
 ---
