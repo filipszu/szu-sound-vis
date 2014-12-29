@@ -2,7 +2,7 @@ Sound Visualizer
 ===
 mp3 equalizer build with ActionScript 3.0 SoundMixer.computeSpectrum().
 ***
-[Live Demo](http://demo.filipszu.pl/Sound_Visualizer/)
+[Live Demo](http://demo.filipszu.com/Sound_Visualizer/)
 ---
 <pre>
   ___  _  _  _        ___  ____ _   _ 
