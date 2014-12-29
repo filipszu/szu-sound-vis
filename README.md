@@ -11,7 +11,7 @@ mp3 equalizer build with ActionScript 3.0 SoundMixer.computeSpectrum().
  |_|  |_||_||_|| .__/|___//___| \___/ 
                |_|    Interactive Developer
 
-Site: <a href="http://www.filipszu.pl/" title="Click to go to FilipSZU's homesite!">filipszu.pl</a>
+Site: <a href="http://www.filipszu.com/" title="Click to go to FilipSZU's homesite!">filipszu.com</a>
 
 Twitter: <a href="https://twitter.com/filipszu" title="Click to go to FilipSZU's Twitter!">@filipszu</a>
 </pre>
